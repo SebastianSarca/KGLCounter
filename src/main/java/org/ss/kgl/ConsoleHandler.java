@@ -25,7 +25,7 @@ public class ConsoleHandler {
         System.out.println("Starting......get ready.....");
         wait(1500);
         for (int i = 1; i <= settings.getRepetitions(); i++) {
-            System.out.println("-- set " + i);
+            System.out.println("[set " + i + "]");
             runSet("Go", settings.getDurationInSeconds());
             runSet("Break", 3);
         }
@@ -39,7 +39,9 @@ public class ConsoleHandler {
             System.out.print(j + " ");
         }
         wait(1000);
-        System.out.println(" OK");
+        System.out.print(" OK");
+        System.out.println(" ");
+        wait(1000);
     }
 
     private Settings readSettings() {
