@@ -29,7 +29,9 @@ public class ConsoleHandler {
         for (int i = 1; i <= settings.getRepetitions(); i++) {
             System.out.println("[set " + i + "]");
             runSet("Go", settings.getDurationInSeconds());
-            runSet("Break", BREAK_TIME_IN_SECONDS);
+            if (i != settings.getRepetitions()) {
+                runSet("Break", BREAK_TIME_IN_SECONDS);
+            }
         }
     }
 
@@ -42,15 +44,16 @@ public class ConsoleHandler {
         }
         wait(1000);
         System.out.print(" OK");
-        System.out.println(" ");
         wait(1000);
+        System.out.println(" ");
+
     }
 
     private Settings readSettings() {
         String acceptDefault = console.readLine("default settings (20/10): (y/n) >");
         if (acceptDefault.trim().toLowerCase().equals("y")) {
             return new Settings(20, 10);
-        }else{
+        } else {
             return readDetailedSettings();
         }
     }
@@ -62,9 +65,9 @@ public class ConsoleHandler {
     }
 
 
-    private int readNumberFromConsole(String label){
+    private int readNumberFromConsole(String label) {
         Integer value = null;
-        while ( value == null) {
+        while (value == null) {
             try {
                 value = Integer.valueOf(console.readLine(label));
             } catch (NumberFormatException e) {
