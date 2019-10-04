@@ -4,6 +4,8 @@ import java.io.Console;
 
 public class ConsoleHandler {
 
+    private static final int BREAK_TIME_IN_SECONDS = 3;
+
     private Console console;
 
     public ConsoleHandler() {
@@ -27,7 +29,7 @@ public class ConsoleHandler {
         for (int i = 1; i <= settings.getRepetitions(); i++) {
             System.out.println("[set " + i + "]");
             runSet("Go", settings.getDurationInSeconds());
-            runSet("Break", 3);
+            runSet("Break", BREAK_TIME_IN_SECONDS);
         }
     }
 
@@ -48,11 +50,29 @@ public class ConsoleHandler {
         String acceptDefault = console.readLine("default settings (20/10): (y/n) >");
         if (acceptDefault.trim().toLowerCase().equals("y")) {
             return new Settings(20, 10);
+        }else{
+            return readDetailedSettings();
         }
-        System.exit(0);
-        return null;
     }
 
+    private Settings readDetailedSettings() {
+        int repetitions = readNumberFromConsole("Number of sets: ");
+        int duration = readNumberFromConsole("Duration of a set(in seconds): ");
+        return new Settings(repetitions, duration);
+    }
+
+
+    private int readNumberFromConsole(String label){
+        Integer value = null;
+        while ( value == null) {
+            try {
+                value = Integer.valueOf(console.readLine(label));
+            } catch (NumberFormatException e) {
+                System.out.println("Value should be numeric, try again");
+            }
+        }
+        return value;
+    }
 
     private void wait(int numberOfMiliseconds) {
         try {
